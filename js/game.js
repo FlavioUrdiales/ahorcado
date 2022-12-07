@@ -22,7 +22,7 @@ new Vue({
         
         async checkGameStatus () {
             if (this.playerWins()) {
-                Swal.fire("You win! The word was " + this.getUnhiddenWord());
+                Swal.fire("GANASTE! La palabra era" + this.getUnhiddenWord());
                 deleteWord(this.getUnhiddenWord());
                 const score = getScore();
                 const addScore = this.remainingAttempts * 2;
@@ -42,32 +42,32 @@ new Vue({
                 if (score > topten[9].score) {
                     
                 const result =  await Swal.fire({
-                    title: 'Save score',
-                    text: "Do you want to save your score?",
+                    title: 'Guardar Score',
+                    text: "Quieres guardar tu score?",
                     icon: 'question',
                     showCancelButton: true,
                     cancelButtonText: 'No',
-                    confirmButtonText: 'Yes'
+                    confirmButtonText: 'Si'
                 });
                 if (result.value) {
                     const { value: name } = await Swal.fire({
-                        title: 'Enter your name',
+                        title: 'Ingresa tu nombre',
                         input: 'text',
-                        inputLabel: 'Your name',
-                        inputPlaceholder: 'Enter your name'
+                        inputLabel: 'Nombre',
+                        inputPlaceholder: 'Ingresa tu nombre'
                     });
                     if (name) {
                         const response = saveScoreToApi(name, score);
                         if (response.status === "ok") {
-                            Swal.fire("Score saved");
+                            Swal.fire("Score guardado");
                         } else {
-                            Swal.fire("Error saving score");
+                            Swal.fire("Error al guardar el score");
                         }
                     }
                 }
                 }
 
-                Swal.fire("You lose. The word was " + this.getUnhiddenWord());
+                Swal.fire("PERDISTE. La Palabra era " + this.getUnhiddenWord());
                 saveScore(0);
                 showScore();
                 this.resetGame();
@@ -103,12 +103,12 @@ new Vue({
 
                 //si no hay palabras decirle que elija una dificultad 
                 const result = await Swal.fire({
-                    title: 'Choose difficulty',
-                    text: "Choose a difficulty",
+                    title: 'Elige la dificultad',
+                    text: "Quieres jugar en modo dificil?",
                     icon: 'question',
                     showCancelButton: true,
-                    cancelButtonText: 'Easy',
-                    confirmButtonText: 'Hard'
+                    cancelButtonText: 'No',
+                    confirmButtonText: 'Si'
                 });
                 if (result.value) {
                     const response = await getWordsFromApi3();
